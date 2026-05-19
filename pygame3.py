@@ -1,0 +1,132 @@
+
+import pygame
+import random
+
+# Initialize pygame
+pygame.init()
+
+# Screen setup
+w, h = 600, 600
+scrn = pygame.display.set_mode((w, h))
+pygame.display.set_caption("Snake Game")
+clock = pygame.time.Clock()
+
+
+
+def menu_title():
+    light = (170,170,170)
+    dark = (100,100,100)
+    mouse = pygame.mous.get_pos()
+    b_width = 100
+    b_height = 40
+    
+    pass
+def menu_start_btn():
+    pass
+def menu_exit_btn():
+    pass
+
+
+#button setup
+def draw_button_reset():
+    color_light = (170,170,170)
+    color_dark = (100,100,100)
+    mouse = pygame.mouse.get_pos()
+
+    #button dimensions
+    b_width = 100
+    b_height = 40
+    b_x = w- b_width - 10
+    b_y = 10
+
+    #if cursor hovering on top of button
+    is_over = (b_x<=mouse[0]<=b_x+b_width and b_y<=mouse[1]<=b_y+b_height)
+    #draw button
+    color = color_light if is_over else color_dark
+    pygame.draw.rect(scrn,color,(b_x,b_y,b_width,b_height))
+
+    smallfont = pygame.font.SysFont('Corbel',35)
+    text = smallfont.render('RESET?', True,(255,255,255))
+    text_rect = text.get_rect(center=(b_x+b_width//2,b_y+b_height//2))
+    scrn.blit(text,text_rect)
+
+    return is_over and pygame.mouse.get_pressed()[0]
+
+# Game variables
+CELL_SIZE = 20
+snake = [(300, 300)]
+direction = (0, 0)
+points = 0
+food = (random.randrange(0, w, CELL_SIZE), random.randrange(0, h, CELL_SIZE))
+show_reset = False 
+# Font for score
+font = pygame.font.SysFont('Arial', 32)
+
+def draw_score(scrn, score_value):
+    score_surface = font.render(f'Score: {score_value}', True, (255, 255, 255))
+    scrn.blit(score_surface, (10, 10))
+
+running = True
+while running:
+    # EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_UP:
+                direction = (0, -CELL_SIZE)
+            if event.key == pygame.K_DOWN:
+                direction = (0, CELL_SIZE)
+            if event.key == pygame.K_LEFT:
+                direction = (-CELL_SIZE, 0)
+            if event.key == pygame.K_RIGHT:
+                direction = (CELL_SIZE, 0)
+    
+    # UPDATE SNAKE
+    if direction != (0, 0):
+        head_x = snake[0][0] + direction[0]
+        head_y = snake[0][1] + direction[1]
+        new_head = (head_x, head_y)
+
+        snake.insert(0, new_head)
+
+        # FOOD COLLISION
+        if new_head == food:
+            food = (random.randrange(0, w, CELL_SIZE), random.randrange(0, h, CELL_SIZE))
+            points += 1
+        else:
+            snake.pop()
+
+        # WALL COLLISION
+        if (head_x < 0 or head_x >= w or head_y < 0 or head_y >= h):
+            show_reset = True
+
+        # SELF COLLISION
+        if new_head in snake[1:]:
+            running = False
+
+    # DRAW
+    scrn.fill((0, 0, 0))  # Black background
+    
+    # Draw snake
+    for segment in snake:
+        pygame.draw.rect(scrn, (0, 255, 0), (*segment, CELL_SIZE, CELL_SIZE))
+
+    # Draw food
+    pygame.draw.rect(scrn, (255, 0, 0), (*food, CELL_SIZE, CELL_SIZE))
+
+    # Draw score
+    draw_score(scrn, points)
+
+    if show_reset:
+        reset = draw_button_reset()
+        if reset:
+            snake = [(300,300)]
+            direction = (0,0)
+            points = 0
+            food = (random.randrange(0,w,CELL_SIZE),random.randrange(0,h,CELL_SIZE))
+            show_reset = False
+    pygame.display.update()
+    clock.tick(10)
+
+pygame.quit()
