@@ -16,8 +16,44 @@ pygame.display.set_caption("Snake Game")
 clock = pygame.time.Clock()
 
 
+def draw_exit_btn():
+    #Button colors
+    light, dark = (170,170,170),(100,100,100)
+    #getting the button's position
+    mouse = pygame.mouse.get_pos()
+    #button dimensions
+    bttnWidth,bttnHeight = 100, 40
+    #button position
+    b_pos_x = w -bttnWidth - 200
+    b_pos_y = 250
+    #checking if current mouse position is on top of the button
+    is_over = (b_pos_x<=mouse[0]<=b_pos_x+bttnWidth and b_pos_y<=mouse[1]<=b_pos_y+bttnHeight)
+
+    color = light if is_over else dark
+    pygame.draw.rect(scrn,color,(b_pos_x,b_pos_y,bttnWidth,bttnHeight))
+def draw_start_btn():
+    pass
+
 def show_menu():
-    white = (255,255,255)
+    '''
+    light = (170,170,170)
+    dark = (100,100,100)
+    mouse = pygame.mouse.get_pos()
+    #button dimensions
+    bttnWidth,bttnHeight = 100, 40
+    #start button location
+    startX, startY = 300, 300
+    #exit button location
+    exitX, exitY = 300,350 
+
+    #checking if the cursor hovering on top of the respective buttons
+    isOverStart = None
+    isOverExit = None
+
+    #drawing the buttons
+
+
+
     smallfont = pygame.font.SysFont("Corbell",35)
     titleText = smallfont.render("SNAKE GAME",True,white)
     titleRect = titleText.get_rect(center = (w//2,250))
@@ -31,6 +67,7 @@ def show_menu():
     scrn.blit(startText,startRect)
     pygame.draw.rect(scrn,(111, 219, 99),exitRect.inflate(20,10))
     scrn.blit(exitText,exitRect)
+    '''
 
 #button setup
 def draw_button_reset():
