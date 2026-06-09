@@ -43,5 +43,5 @@ while running:
         pygame.draw.rect(screen, (200, 50, 50), p)
     pygame.draw.rect(screen, (50, 200, 80), player)
     pygame.display.flip()
-    clock.tick(60)
+    clock.tick(50)
 pygame.quit()
