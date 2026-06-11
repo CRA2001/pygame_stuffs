@@ -1,5 +1,5 @@
 '''
-Basic movement and animation
+Enemy and attack basics
 '''
 import pygame, sys
 
@@ -11,6 +11,7 @@ clock = pygame.time.Clock()
 def load_frames(paths,size=(40,40)):
     return  [pygame.transform.scale(pygame.image.load(p),size)for p in paths]
 
+#player frame animation
 idle_frames= load_frames(['idle/sprite-1-1.png','idle/sprite-1-2.png','idle/sprite-1-3.png','idle/sprite-1-4.png','idle/sprite-1-5.png','idle/sprite-1-6.png'])
 #movement frames
 run_frames =load_frames(['run/sprite-1-1.png','run/sprite-1-2.png','run/sprite-1-3.png','run/sprite-1-4.png','run/sprite-1-5.png','run/sprite-1-6.png']) 
@@ -19,6 +20,12 @@ jump_frames = load_frames(["jump/sprite-1-1.png","jump/sprite-1-2.png","jump/spr
 attack1_frames =load_frames(['attack1/sprite-1-1.png','attack1/sprite-1-2.png','attack1/sprite-1-3.png','attack1/sprite-1-4.png','attack1/sprite-1-5.png','attack1/sprite-1-6.png','attack1/sprite-1-7.png','attack1/sprite-1-8.png'])
 stab_frames = load_frames(["stab/sprite-1-1.png","stab/sprite-1-2.png","stab/sprite-1-3.png"])
 attack2_frames = load_frames(["attack2/sprite-1-1.png","attack2/sprite-1-2.png","attack2/sprite-1-3.png","attack2/sprite-1-4.png"])
+
+#enemy frame animation
+enemyRun =  load_frames(['enemy/enemyRun/sprite-1-1.png','enemy/enemyRun/sprite-1-2.png','enemy/enemyRun/sprite-1-3.png','enemy/enemyRun/sprite-1-4.png','enemy/enemyRun/sprite-1-5.png','enemy/enemyRun/sprite-1-6.png','enemy/enemyRun/sprite-1-7.png','enemy/enemyRun/sprite-1-8.png'])
+enemyHurt = load_frames(['enemy/enemyHurt/sprite-1-1.png','enemy/enemyHurt/sprite-1-2.png','enemy/enemyHurt/sprite-1-3.png'])
+
+#player set up variables
 player = pygame.Rect(100, 500,40,20) # starting position
 vel_y = 0
 on_ground = False
