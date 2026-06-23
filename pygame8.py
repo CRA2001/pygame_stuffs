@@ -7,6 +7,11 @@ pygame.init()
 screen = pygame.display.set_mode((800, 600))
 clock = pygame.time.Clock()
 
+#sounds
+aAttackSound = pygame.mixer.Sound('sounds/attackA.wav')
+sAttackSound = pygame.mixer.Sound('sounds/attackS.wav')
+dAttackSound = pygame.mixer.Sound('sounds/attackD.wav')
+
 
 def load_frames(paths,size=(40,40)):
     return  [pygame.transform.scale(pygame.image.load(p),size)for p in paths]
@@ -85,10 +90,13 @@ while running:
     #attack controls
     if keys[pygame.K_a]:
         state = "attack1"
+        aAttackSound.play()
     elif keys[pygame.K_s]:
         state = "stab"
+        sAttackSound.play()
     elif keys[pygame.K_d]:
         state = "attack2"
+        dAttackSound.play()
     elif jump and moving:
         state = "jump"
     elif moving:
